@@ -1,10 +1,15 @@
 version: "3.3"
 services:
   mongodb:
-    image: mongo
+    image: mongo:4.4.3
+    container_name: mongodb
     ports:
       - target: 27017
-        published: 27017
+        published: 27000
+    volumes:
+      - type: volume
+        source: data
+        target: /data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME_FILE: "/run/secrets/mongo_root"
       MONGO_INITDB_ROOT_PASSWORD_FILE: "/run/secrets/mongo_root_pwd"
@@ -13,8 +18,11 @@ services:
       - mongo_root_pwd
     restart: always
 
+volumes:
+    data:
+
 secrets:
   mongo_root:
-    file: ../../secrets/admin_username.txt
+    file: secrets/admin_username.txt
   mongo_root_pwd:
-    file: ../../secrets/admin_password.txt
+    file: secrets/admin_password.txt
