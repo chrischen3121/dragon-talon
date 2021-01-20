@@ -58,7 +58,12 @@ class XiaoquSpider(scrapy.Spider):
             matched = re.search(r"(\d+)年建成", pos_info_txt)
             built_year = matched.group(1) if matched else None
             tags = info_node.xpath("div[@class='tagList']/span/text()").getall()
-            yield items.XiaoquItem(xiaoqu_id, name, district, area, built_year, tags)
+            try:
+                yield items.XiaoquItem(xiaoqu_id, name, district, area, int(built_year), tags)
+            except TypeError:
+                continue
+
+            # generates daily stats
             houseinfo_nodes = info_node.xpath("div[@class='houseInfo']/a")
             for_rent = 0
             deal_in_90days= 0
@@ -70,13 +75,10 @@ class XiaoquSpider(scrapy.Spider):
                 elif title.endswith("租房"):
                     matched = re.match(r"(\d+)套正在出租", houseinfo_node.xpath("text()").get())
                     for_rent = matched.group(1) if matched else None
-            yield items.XiaoQuDailyStats(xiaoqu_id, name, for_rent, deal_in_90days)
-            break
-        #     if info_node is None:
-        #         continue
-        #     name = info_node.xpath("div[@class='title']/a/text()").get()
-        #     if name is None:
-        #         continue
-        #     print(xiaoqu_id, name)
-            # yield items.XiaoquItem(name=node.xpath["div[@class='info']/div[@class='title']/"])
-        # TODO: following links
+            ask_avg_price = xiaoqu_node.xpath(
+                "//div[@class='xiaoquListItemPrice']/div[@class='totalPrice']/span/text()").get()
+            on_sale_count = xiaoqu_node.xpath("//a[@class='totalSellCount']/span/text()").get()
+            try:
+                yield items.XiaoQuDailyStats(xiaoqu_id, name, int(for_rent), int(on_sale_count), int(deal_in_90days), int(ask_avg_price))
+            except TypeError:
+                continue

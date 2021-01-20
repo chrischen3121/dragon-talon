@@ -16,4 +16,6 @@ class XiaoQuDailyStats:
     xiaoqu_id: str
     name: str
     for_rent: int
+    on_sale_count: int
     deal_in_90days: int
+    ask_avg_price: int
