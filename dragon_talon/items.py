@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import date
 from typing import List, Optional
 
 
@@ -13,6 +14,7 @@ class XiaoquItem:
 
 @dataclass
 class XiaoQuDailyStats:
+    date_: date
     xiaoqu_id: str
     name: str
     for_rent: int

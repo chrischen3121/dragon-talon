@@ -11,18 +11,29 @@ services:
         source: data
         target: /data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME_FILE: "/run/secrets/mongo_root"
-      MONGO_INITDB_ROOT_PASSWORD_FILE: "/run/secrets/mongo_root_pwd"
+      MONGO_INITDB_ROOT_USERNAME_FILE: "/run/secrets/db_username"
+      MONGO_INITDB_ROOT_PASSWORD_FILE: "/run/secrets/db_password"
     secrets:
-      - mongo_root
-      - mongo_root_pwd
+      - db_username
+      - db_password
+    restart: always
+  lianjia-scrapy:
+    # TODO build: .
+    image: python:3.7.8-slim-stretch
+    container_name: lianjia-scrapy
+    environment:
+      DB_USERNAME_FILE: "/run/secrets/username"
+      DB_PASSWORD_FILE: "/run/secrets/password"
+    secrets:
+      - username
+      - password
     restart: always
 
 volumes:
     data:
 
 secrets:
-  mongo_root:
-    file: secrets/admin_username.txt
-  mongo_root_pwd:
-    file: secrets/admin_password.txt
+  db_username:
+    file: secrets/db_username.txt
+  db_password:
+    file: secrets/db_password.txt

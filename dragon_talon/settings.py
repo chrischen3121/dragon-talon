@@ -3,6 +3,8 @@ BOT_NAME = "dragon_talon"
 SPIDER_MODULES = ["dragon_talon.spiders"]
 NEWSPIDER_MODULE = "dragon_talon.spiders"
 
+LOG_LEVEL = 'ERROR'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'tutorial (+http://www.yourdomain.com)'
 
@@ -44,12 +46,6 @@ ROBOTSTXT_OBEY = True
 #    'tutorial.middlewares.TutorialDownloaderMiddleware': 543,
 # }
 
-# Enable or disable extensions
-# See https://docs.scrapy.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
-# }
-
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
@@ -79,3 +75,9 @@ HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # Spidermon is a framework to build monitors for Scrapy spiders.
 # SPIDERMON_ENABLED = True
+
+# Enable or disable extensions
+# See https://docs.scrapy.org/en/latest/topics/extensions.html
+# EXTENSIONS = {
+#     'spidermon.contrib.scrapy.extensions.Spidermon': 500,
+# }
