@@ -1,3 +1,4 @@
+import re
 from typing import Optional
 
 import scrapy
@@ -47,10 +48,29 @@ class XiaoquSpider(scrapy.Spider):
                 continue
             try:
                 info_node = xiaoqu_node.xpath("div[@class='info']")[0]
+                pos_info = info_node.xpath("div[@class='positionInfo']")[0]
             except IndexError:
                 continue
             name = info_node.xpath("div[@class='title']/a/text()").get()
-            yield items.XiaoquItem(xiaoqu_id, name)
+            district = pos_info.xpath("a[@class='district']/text()").get()
+            area = pos_info.xpath("a[@class='bizcircle']/text()").get()
+            pos_info_txt = pos_info.get()
+            matched = re.search(r"(\d+)年建成", pos_info_txt)
+            built_year = matched.group(1) if matched else None
+            tags = info_node.xpath("div[@class='tagList']/span/text()").getall()
+            yield items.XiaoquItem(xiaoqu_id, name, district, area, built_year, tags)
+            houseinfo_nodes = info_node.xpath("div[@class='houseInfo']/a")
+            for_rent = 0
+            deal_in_90days= 0
+            for houseinfo_node in houseinfo_nodes:
+                title = houseinfo_node.xpath("@title").get()
+                if title.endswith("网签"):
+                    matched = re.match(r"90天成交(\d+)", houseinfo_node.xpath("text()").get())
+                    deal_in_90days = matched.group(1) if matched else None
+                elif title.endswith("租房"):
+                    matched = re.match(r"(\d+)套正在出租", houseinfo_node.xpath("text()").get())
+                    for_rent = matched.group(1) if matched else None
+            yield items.XiaoQuDailyStats(xiaoqu_id, name, for_rent, deal_in_90days)
             break
         #     if info_node is None:
         #         continue
