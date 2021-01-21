@@ -15,6 +15,7 @@ def _get_mongo_uri() -> str:
 class MongoPipeline:
 
     collection_name = "scrapy_items"
+    # TODO: items to different collections
 
     def __init__(self, mongo_uri, mongo_db):
         self._mongo_uri = _get_mongo_uri()
