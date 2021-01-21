@@ -3,7 +3,7 @@ BOT_NAME = "dragon_talon"
 SPIDER_MODULES = ["dragon_talon.spiders"]
 NEWSPIDER_MODULE = "dragon_talon.spiders"
 
-LOG_LEVEL = 'ERROR'
+LOG_LEVEL = 'DEBUG'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'tutorial (+http://www.yourdomain.com)'
@@ -48,9 +48,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'tutorial.pipelines.TutorialPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   'dragon_talon.pipelines.MongoPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
