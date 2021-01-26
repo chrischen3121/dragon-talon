@@ -19,17 +19,21 @@ services:
       - db_username
       - db_password
     restart: always
-  # lianjia-scrapy:
-  #   # TODO build: .
-  #   image: python:3.7.8-slim-stretch
-  #   container_name: lianjia-scrapy
-  #   environment:
-  #     DB_USERNAME_FILE: "/run/secrets/db_username"
-  #     DB_PASSWORD_FILE: "/run/secrets/db_password"
-  #   secrets:
-  #     - db_username
-  #     - db_password
-  #   restart: always
+  lianjia-scrapy:
+    build: .
+    image: lianjia-scrapy
+    container_name: lianjia-scrapy
+    depends_on:
+      - mongodb
+    networks:
+      - dragon
+    environment:
+      DRAGON_TALON_DB_USERNAME_FILE: "/run/secrets/db_username"
+      DRAGON_TALON_DB_PASSWORD_FILE: "/run/secrets/db_password"
+    secrets:
+      - db_username
+      - db_password
+    restart: always
 
 volumes:
     data:

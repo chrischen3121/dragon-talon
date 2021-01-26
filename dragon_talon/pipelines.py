@@ -19,7 +19,7 @@ def _get_mongo_uri() -> str:
         username = fs.read().strip()
     with open(os.environ.get("DRAGON_TALON_DB_PASSWORD_FILE"), "rt") as fs:
         password = fs.read().strip()
-    return f"mongodb://{username}:{password}@mongodb:27000"
+    return f"mongodb://{username}:{password}@mongodb:27017"
 
 
 class MongoPipeline:
