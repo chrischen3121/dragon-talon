@@ -84,5 +84,5 @@ class XiaoquSpider(scrapy.Spider):
                     int(deal_in_90days),
                     int(ask_avg_price),
                 )
-            except TypeError:
+            except (TypeError, ValueError):
                 continue
