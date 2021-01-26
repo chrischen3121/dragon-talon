@@ -31,6 +31,7 @@ Features
   - crawl transactions
   - crawl offer prices
   - implement web backend
+  - schedule cron jobs
 
 
 Credits
