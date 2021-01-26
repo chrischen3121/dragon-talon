@@ -4,6 +4,7 @@ SPIDER_MODULES = ["dragon_talon.spiders"]
 NEWSPIDER_MODULE = "dragon_talon.spiders"
 
 LOG_LEVEL = "INFO"
+TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'tutorial (+http://www.yourdomain.com)'

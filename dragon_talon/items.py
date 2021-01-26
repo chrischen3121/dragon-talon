@@ -1,10 +1,11 @@
-from dataclasses import dataclass, field
-from datetime import date
+from dataclasses import dataclass
+from datetime import datetime
 from typing import List, Optional
 
 
 @dataclass
-class XiaoquItem:
+class XiaoquInfo:
+    item_name = "xiaoqu_info"
     xiaoqu_id: str
     name: str
     district: str
@@ -13,8 +14,10 @@ class XiaoquItem:
     tags: List[str]
 
 @dataclass
-class XiaoQuDailyStats:
-    date_: date
+class XiaoquDailyStats:
+    item_name = "xiaoqu_daily_stats"
+
+    date: datetime
     xiaoqu_id: str
     name: str
     for_rent: int
