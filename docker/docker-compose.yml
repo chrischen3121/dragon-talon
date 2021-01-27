@@ -33,7 +33,7 @@ services:
     secrets:
       - db_username
       - db_password
-    restart: always
+    restart: on-failure
 
 volumes:
     data:
