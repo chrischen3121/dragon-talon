@@ -1,3 +1,3 @@
-from ._xiaoqu import XiaoquSpider
+from ._lianjia import LianjiaSpider
 
-__all__ = ["XiaoquSpider"]
+__all__ = ["LianjiaSpider"]
