@@ -11,7 +11,15 @@ class XiaoquInfo:
     district: str
     area: str
     built_year: Optional[int]
+    num_of_buildings: int
+    building_type: str
+    prop_developer: str
+    prop_manager: str
+    management_fee: str
+    north_latitude: Optional[float]
+    east_latitude: Optional[float]
     tags: List[str]
+
 
 @dataclass
 class XiaoquDailyStats:
