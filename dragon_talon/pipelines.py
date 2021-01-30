@@ -37,7 +37,7 @@ class MongoPipeline:
         self._consume_thread = threading.Thread(target=self._consume_items, daemon=True)
 
     def _init_collections(self, spider_name: str):
-        if spider_name == "xiaoqu":
+        if spider_name == "lianjia":
             xiaoqu_info_col = self._db_inst.get_collection(items.XiaoquInfo.item_name)
             index1 = IndexModel([("xiaoqu_id", ASCENDING)], unique=True)
             index2 = IndexModel([("district", ASCENDING), ("area", ASCENDING)])
