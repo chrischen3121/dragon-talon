@@ -12,6 +12,7 @@ class XiaoquInfo:
     area: str
     built_year: Optional[int]
     num_of_buildings: int
+    num_of_units: int
     building_type: str
     prop_developer: str
     prop_manager: str
