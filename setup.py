@@ -21,9 +21,26 @@ setup_requirements = [
     "pytest-runner",
 ]
 
+dev_requirements = [
+    "flake8",  # wrapper of pyflakes&pep8
+    "pylint",  # code style checking
+    "mypy>=0.670",  # type checking
+    "isort",  # sorting imports order
+    "ipdb",
+    "black",  # code formatting
+    "wheel",
+    "twine",  # upload to pypi
+    "black>=20.0",
+]
+
 test_requirements = [
     "pytest>=4.0.0,<7.0.0",
 ]
+extras_requirements = {
+    "dev": dev_requirements,
+    "testing": test_requirements,
+    "all": dev_requirements + test_requirements,
+}
 
 setup(
     author="chrischen",
@@ -38,7 +55,11 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     description="web crawler for china real estate market",
-    entry_points={"console_scripts": ["dragon_talon=dragon_talon.cli:main",],},
+    entry_points={
+        "console_scripts": [
+            "dragon_talon=dragon_talon.cli:main",
+        ],
+    },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + "\n\n" + history,
@@ -48,7 +69,7 @@ setup(
     packages=find_packages(include=["dragon_talon", "dragon_talon.*"]),
     setup_requires=setup_requirements,
     test_suite="tests",
-    tests_require=test_requirements,
+    extras_require=extras_requirements,
     url="https://github.com/chrischen3121/dragon_talon",
     version="0.1.2",
     zip_safe=False,

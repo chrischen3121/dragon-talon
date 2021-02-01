@@ -46,6 +46,16 @@ class MongoPipeline:
             xiaoqu_daily_stats_col = self._db_inst.get_collection(items.XiaoquDailyStats.item_name)
             index1 = IndexModel([("date_", ASCENDING), ("xiaoqu_id", ASCENDING)], unique=True)
             xiaoqu_daily_stats_col.create_indexes([index1])
+
+            transaction_col = self._db_inst.get_collection(items.Transaction.item_name)
+            index1 = IndexModel([("date_", ASCENDING), ("house_id", ASCENDING)], unique=True)
+            index2 = IndexModel([("xiaoqu_id", ASCENDING), ("date_", ASCENDING)])
+            transaction_col.create_indexes([index1, index2])
+
+            forsale_col = self._db_inst.get_collection(items.Transaction.item_name)
+            index1 = IndexModel([("date_", ASCENDING), ("house_id", ASCENDING)], unique=True)
+            index2 = IndexModel([("xiaoqu_id", ASCENDING), ("date_", ASCENDING)])
+            forsale_col.create_indexes([index1, index2])
         else:
             raise RuntimeError(f"unexpected spider name {self._spider_name}")
 
@@ -83,9 +93,7 @@ class MongoPipeline:
         for colname, items2insert in col2items.items():
             collection = self._db_inst.get_collection(colname)
             try:
-                collection.insert_many(
-                    items2insert, ordered=False, bypass_document_validation=True
-                )
+                collection.insert_many(items2insert, ordered=False, bypass_document_validation=True)
             except pymongo.errors.BulkWriteError as exc:
                 # ignore duplicate exception
                 exc_list = [error for error in exc.details["writeErrors"] if error["code"] != 11000]

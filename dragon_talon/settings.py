@@ -3,7 +3,7 @@ BOT_NAME = "dragon_talon"
 SPIDER_MODULES = ["dragon_talon.spiders"]
 NEWSPIDER_MODULE = "dragon_talon.spiders"
 
-LOG_LEVEL = "DEBUG"
+LOG_LEVEL = "INFO"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -49,9 +49,9 @@ CONCURRENT_REQUESTS = 3
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#     "dragon_talon.pipelines.MongoPipeline": 300,
-# }
+ITEM_PIPELINES = {
+    "dragon_talon.pipelines.MongoPipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -69,7 +69,7 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = 2.0
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 60 * 60
+HTTPCACHE_EXPIRATION_SECS = 30 * 60
 HTTPCACHE_DIR = "httpcache"
 HTTPCACHE_IGNORE_HTTP_CODES = []
 HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"

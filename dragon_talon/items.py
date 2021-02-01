@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Union
 
 
 @dataclass
@@ -38,16 +38,40 @@ class XiaoquDailyStats:
 @dataclass
 class Transaction:
     item_name = "transaction"
-    date: datetime
+
+    house_id: int
+    date_: datetime
     towards: str
     decoration: str
     room_type: str
     total_area: float
     floor_location: str
-    building_style: str
+    building_type: str
     delt_avg_price: int
     delt_total_w: int
     ask_total_w: int
     ask_duration_days: int
+    xiaoqu_id: str
+    xiaoqu_name: str
+
+
+@dataclass
+class ForSale:
+    item_name = "for_sale"
+
+    house_id: int
+    date_: datetime
+    description: str
+    room_type: str
+    total_area: float
+    towards: str
+    decoration: str
+    floor_location: str
+    building_type: str
+    five_years_status: int
+    ask_total_w: int
+    ask_avg_price: int
+    ask_duration_days: int
+    num_of_followers: int
     xiaoqu_id: str
     xiaoqu_name: str
