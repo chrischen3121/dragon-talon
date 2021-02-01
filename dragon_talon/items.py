@@ -33,3 +33,21 @@ class XiaoquDailyStats:
     on_sale_count: int
     deal_in_90days: int
     ask_avg_price: int
+
+
+@dataclass
+class Transaction:
+    item_name = "transaction"
+    date: datetime
+    towards: str
+    decoration: str
+    room_type: str
+    total_area: float
+    floor_location: str
+    building_style: str
+    delt_avg_price: int
+    delt_total_w: int
+    ask_total_w: int
+    ask_duration_days: int
+    xiaoqu_id: str
+    xiaoqu_name: str

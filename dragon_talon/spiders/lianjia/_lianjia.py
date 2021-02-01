@@ -37,6 +37,8 @@ class LianjiaSpider(scrapy.Spider):
 
     def _parse_home(self, response: scrapy.http.HtmlResponse):
         districts = response.xpath("//div[@data-role='ershoufang']/div[1]/a")
+        # TODO:
+        districts = districts[:1]
         pattern = re.compile(r"\/xiaoqu\/(\w+)\/su1.+")
         districts2fo = []
         for dist in districts:
@@ -65,6 +67,8 @@ class LianjiaSpider(scrapy.Spider):
 
     def _parse_district_page(self, response: scrapy.http.HtmlResponse):
         xiaoqu_nodes = response.xpath("//li[@class='clear xiaoquListItem']")
+        # TODO:
+        xiaoqu_nodes = xiaoqu_nodes[:1]
         for xiaoqu_node in xiaoqu_nodes:
             xiaoqu_id: Optional[str] = xiaoqu_node.xpath("@data-id").get()
             if xiaoqu_id is None:
@@ -163,3 +167,25 @@ class LianjiaSpider(scrapy.Spider):
                 info_content = info_item.xpath("span[@class='xiaoquInfoContent']/text()").get()
                 self.__fill_label_content(info_label, info_content, kwargs)
         yield items.XiaoquInfo(**kwargs)
+        xiaoqu_info = {"xiaoqu_id": kwargs["xiaoqu_id"], "xiaoqu_name": kwargs["name"]}
+        chengjiao_url = response.xpath("//div[@id='frameDeal']/a/@href").get()
+        if chengjiao_url:
+            yield response.follow(
+                chengjiao_url,
+                self._parse_chengjiao,
+                cb_kwargs=xiaoqu_info,
+            )
+        # TODO:
+
+    def _parse_chengjiao(self, response: scrapy.http.HtmlResponse, **kwargs):
+        all_trans_nodes = response.xpath("//ul[@class='listContent']/li/div[@class='info']")
+        for trans_node in all_trans_nodes:
+            title = trans_node.xpath("div[@class='title']/a/text()").get()
+            splitted_title = title.split()
+            if len(splitted_title) < 3:
+                continue
+            # houseinfo =
+            print(splitted_title)
+
+    def _parse_ershoufang(self, response: scrapy.http.HtmlResponse, **kwargs):
+        pass

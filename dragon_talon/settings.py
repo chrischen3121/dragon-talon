@@ -3,7 +3,7 @@ BOT_NAME = "dragon_talon"
 SPIDER_MODULES = ["dragon_talon.spiders"]
 NEWSPIDER_MODULE = "dragon_talon.spiders"
 
-LOG_LEVEL = "INFO"
+LOG_LEVEL = "DEBUG"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -49,9 +49,9 @@ CONCURRENT_REQUESTS = 3
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    "dragon_talon.pipelines.MongoPipeline": 300,
-}
+# ITEM_PIPELINES = {
+#     "dragon_talon.pipelines.MongoPipeline": 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
