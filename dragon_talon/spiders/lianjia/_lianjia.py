@@ -116,15 +116,15 @@ class LianjiaSpider(scrapy.Spider):
         on_sale_count = xiaoqu_node.xpath("//a[@class='totalSellCount']/span/text()").get()
         try:
             return items.XiaoquDailyStats(
-                datetime.utcnow().replace(
+                date_=datetime.utcnow().replace(
                     hour=0, minute=0, second=0, microsecond=0, tzinfo=timezone(timedelta(hours=8))
                 ),
-                xiaoqu_id,
-                xiaoqu_name,
-                int(for_rent),
-                int(on_sale_count),
-                int(deal_in_90days),
-                int(ask_avg_price),
+                xiaoqu_id=xiaoqu_id,
+                name=xiaoqu_name,
+                for_rent=int(for_rent),
+                on_sale_count=int(on_sale_count),
+                deal_in_90days=int(deal_in_90days),
+                ask_avg_price=int(ask_avg_price),
             )
         except (TypeError, ValueError):
             return None
@@ -291,9 +291,15 @@ class LianjiaSpider(scrapy.Spider):
                 "div[@class='address']/div[@class='houseInfo']/text()"
             ).get()
             splitted_houseinfo = houseinfo_txt.split("|")
-            (room_type, area_txt, towards, decoration, floor_location, *_, building_type,) = [
-                entry.strip() for entry in splitted_houseinfo
-            ]
+            (
+                room_type,
+                area_txt,
+                towards,
+                decoration,
+                floor_location,
+                *_,
+                building_type,
+            ) = [entry.strip() for entry in splitted_houseinfo]
             total_area_matched = re.match(r"(\d+\.{0,1}\d*)平米", area_txt)
             if not total_area_matched:
                 continue

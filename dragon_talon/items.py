@@ -26,7 +26,7 @@ class XiaoquInfo:
 class XiaoquDailyStats:
     item_name = "xiaoqu_daily_stats"
 
-    date: datetime
+    date_: datetime
     xiaoqu_id: str
     name: str
     for_rent: int
