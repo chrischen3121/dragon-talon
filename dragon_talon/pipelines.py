@@ -99,8 +99,9 @@ class MongoPipeline:
                 exc_list = [error for error in exc.details["writeErrors"] if error["code"] != 11000]
                 if exc_list:
                     logger.error(f"col {colname}: insertion error {exc_list}")
-                inserted = len(items2insert) - len(exc_list)
-                logger.info(f"col {colname}: {inserted} items inserted")
+                failed = len(exc_list)
+                inserted = len(items2insert) - failed
+                logger.info(f"col {colname}: {inserted} items inserted, {failed} items failed")
             else:
                 logger.info(f"col {colname}: {len(items2insert)} items inserted")
         if find_sentinel:
