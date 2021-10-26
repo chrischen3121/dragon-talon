@@ -48,7 +48,6 @@ class LianjiaSpider(scrapy.Spider):
                     districts2fo.append(dist)
             else:
                 continue
-
         yield from response.follow_all(districts2fo, callback=self._parse_disctrict_first_page)
 
     def _parse_disctrict_first_page(self, response: scrapy.http.HtmlResponse):
@@ -159,9 +158,13 @@ class LianjiaSpider(scrapy.Spider):
                 xiaoqu_latitude = info_item.xpath(
                     "span[@class='xiaoquInfoContent']/span/@xiaoqu"
                 ).get()
-                north_latitude, east_latitude = json.loads(xiaoqu_latitude)
-                kwargs["north_latitude"] = north_latitude
-                kwargs["east_latitude"] = east_latitude
+                try:
+                    north_latitude, east_latitude = json.loads(xiaoqu_latitude)
+                except TypeError:
+                    continue
+                else:
+                    kwargs["north_latitude"] = north_latitude
+                    kwargs["east_latitude"] = east_latitude
             else:
                 info_content = info_item.xpath("span[@class='xiaoquInfoContent']/text()").get()
                 self.__fill_label_content(info_label, info_content, kwargs)
@@ -314,7 +317,11 @@ class LianjiaSpider(scrapy.Spider):
             else:
                 five_years_status = 0
             priceinfo_node = info_node.xpath("div[@class='priceInfo']")
-            total_price = int(priceinfo_node.xpath("div[@class='totalPrice']/span/text()").get())
+            total_price = int(
+                float(
+                    priceinfo_node.xpath("div[@class='totalPrice totalPrice2']/span/text()").get()
+                )
+            )
             avg_price = int(priceinfo_node.xpath("div[@class='unitPrice']/@data-price").get())
             followinfo_txt = info_node.xpath("div[@class='followInfo']/text()").get()
             followers_txt, ask_duration_txt = followinfo_txt.split("/")

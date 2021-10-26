@@ -17,10 +17,9 @@ class XiaoquInfo:
     prop_developer: str
     prop_manager: str
     management_fee: str
-    north_latitude: Optional[float]
-    east_latitude: Optional[float]
     tags: List[str]
-
+    north_latitude: Optional[float] = None
+    east_latitude: Optional[float] = None
 
 @dataclass
 class XiaoquDailyStats:
