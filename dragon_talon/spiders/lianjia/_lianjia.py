@@ -170,9 +170,10 @@ class LianjiaSpider(scrapy.Spider):
                 self.__fill_label_content(info_label, info_content, kwargs)
         yield items.XiaoquInfo(**kwargs)
         xiaoqu_info = {"xiaoqu_id": kwargs["xiaoqu_id"], "xiaoqu_name": kwargs["name"]}
-        chengjiao_url = response.xpath("//div[@id='frameDeal']/a/@href").get()
-        if chengjiao_url:
-            yield response.follow(chengjiao_url, self._parse_chengjiao, cb_kwargs=xiaoqu_info)
+        # TODO: need login
+        # chengjiao_url = response.xpath("//div[@id='frameDeal']/a/@href").get()
+        # if chengjiao_url:
+        #     yield response.follow(chengjiao_url, self._parse_chengjiao, cb_kwargs=xiaoqu_info)
         ershoufang_url = response.xpath("//div[@class='goodSellHeader clear']/a/@href").get()
         if ershoufang_url:
             yield response.follow(ershoufang_url, self._parse_ershoufang, cb_kwargs=xiaoqu_info)
